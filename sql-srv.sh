@@ -16,13 +16,13 @@ case $input in
       [yY][eE][sS]|[yY])
             echo "You say Yes"
             echo "Please Enter php-verions? "
-            read php_versin
+            read PHP_V
             ####
             sudo add-apt-repository -y ppa:ondrej/php
             #sudo apt-get update
-            echo "Installing php$php_versin"
-            sudo apt install -y php$php_versin
-            sudo apt-get install -y $php_versin-{bcmath,bz2,intl,gd,mbstring,mysql,zip,common,dom}
+            echo "Installing php$PHP_V"
+            sudo apt install -y php$PHP_V
+            sudo apt-get install -y $PHP_V-{bcmath,bz2,intl,gd,mbstring,mysql,zip,common,dom}
             sudo service apache2 restart
             echo php$(php -v | grep cli  | awk '{print $2}' | cut  -b 1,2,3) installed successfully
             ####
@@ -40,6 +40,7 @@ esac
 fi
 ######
 echo "pass to next line done"
+
 sudo apt install software-properties-common
 add-apt-repository ppa:ondrej/php -y
 apt-get update
