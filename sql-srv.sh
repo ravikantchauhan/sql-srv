@@ -64,10 +64,24 @@ sudo update-alternatives --set phpize /usr/bin/phpize$PHP_V
 sudo update-alternatives --set php-config /usr/bin/php-config$PHP_V
 ##########
 ######sqlsrv
-sudo pecl uninstall -r sqlsrv
-sudo pecl uninstall -r pdo_sqlsrv
-sudo pecl -d php_suffix=$PHP_V install sqlsrv
-sudo pecl -d php_suffix=$PHP_V install pdo_sqlsrv
+ sudo pecl uninstall -r sqlsrv
+ sudo pecl uninstall -r pdo_sqlsrv
+############
+if [[ $PHP_V > 7.3 ]]; then
+   	 sudo pecl -d php_suffix=$PHP_V install sqlsrv
+       pecl -d php_suffix=$PHP_V install pdo_sqlsrv 
+   	#exit 1
+else
+	#if [[ $PHP_V < 7.4.0 ]]; then
+   	#  sudo pecl -d php_suffix=$PHP_V install sqlsrv-5.7.1preview
+      #  pecl -d php_suffix=$PHP_V install pdo_sqlsrv-5.7.1preview 
+          	sudo pecl -d php_suffix=$PHP_V install sqlsrv-5.2.0
+            pecl -d php_suffix=$PHP_V install pdo_sqlsrv-5.2.0 
+   	#exit 1
+        # else
+fi
+# sudo pecl -d php_suffix=$PHP_V install sqlsrv
+# sudo pecl -d php_suffix=$PHP_V install pdo_sqlsrv
 #####
 printf "; priority=20\nextension=sqlsrv.so\n" > /etc/php/$PHP_V/mods-available/sqlsrv.ini
 printf "; priority=30\nextension=pdo_sqlsrv.so\n" > /etc/php/$PHP_V/mods-available/pdo_sqlsrv.ini
